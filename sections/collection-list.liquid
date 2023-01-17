@@ -1,0 +1,101 @@
+{{ "collection-list.css" | asset_url | stylesheet_tag }}
+
+<div class="collection" style="--align-title: {{ section.settings.collection_select }}; --collection-pt: {{ section.settings.collection_pt | append: 'px'  }}; --collection-pb: {{ section.settings.collection_pb | append: 'px'  }}">
+  <div class="container">
+    <div class="row">
+      {% if section.settings.collection_title != blank %}
+        <div class="collection__heading">
+          <h2 class="collection__title heading-3 heading-1-lg">
+            {{ section.settings.collection_title | upcase }}
+          </h2>
+        </div>
+      {% endif %}
+
+      <ul class="collection__list list-none grid">
+        {% if section.settings.collection_list == blank %}
+          {% for item in (1..4) %}
+            <li class="collection__item relative overlay">
+              <div class="collection__media h-100">
+                {{ "collection-3" | placeholder_svg_tag }}
+              </div>
+              <div class="collection__action absolute">
+                <div class="btn btn--white collection__btn">
+                  {{ 'name' | upcase }}</div>
+              </div>
+            </li>
+          {% endfor %}
+        {% else %}
+          {% for collection in section.settings.collection_list %}
+            <li class="collection__item relative overlay">
+              <div class="collection__media h-100">
+                <img
+                  class="collection__img h-100 w-100"
+                  alt="{{ collection.title}}"
+                  src="{{collection.image | img_url: 'master'}}">
+              </div>
+              <div class="collection__action absolute">
+                <a href="{{ collection.url }}" class="btn btn--white collection__btn">
+                  {{ collection.title | upcase }}</a>
+              </div>
+            </li>
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "collection list",
+    "settings": [
+      {
+        "type": "text",
+        "id": "collection_title",
+        "default": "SHOP BY CATEGORY",
+        "label": "Enter title"
+      },
+      {
+        "type": "collection_list",
+        "id": "collection_list",
+        "label": "Pick collection to show",
+        "limit": 4
+      },
+      {
+        "type": "select",
+        "id": "collection_select",
+        "options": [
+          {
+            "value": "center",
+            "label": "Center"
+          }, {
+            "value": "left",
+            "label": "Left"
+          }, {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center",
+        "label": "Align title"
+      },
+      {
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "default": 40,
+        "id": "collection_pt",
+        "label": "padding top"
+      }, {
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "default": 40,
+        "id": "collection_pb",
+        "label": "padding bottom"
+      }
+    ]
+  }
+{% endschema %}

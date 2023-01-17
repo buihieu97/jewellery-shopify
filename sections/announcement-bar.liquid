@@ -1,0 +1,108 @@
+{{ "announcement.css" | asset_url | stylesheet_tag }}
+
+{% for block in section.blocks %}
+  <div class="announcement" style="--bg-announcement: {{ block.settings.announcement_color }};  --announcement-align : {{ block.settings.text_alignment }}">
+    <div class="container-big">
+      <div class="row flex align-center announcement__row ">
+        <div class="announcement__content f-grow-1">
+          {% if block.settings.announcement_text != blank %}
+            {% if block.settings.announcement_url != blank %}
+              <h3 class="announcement__text">
+                <a href="{{ block.settings.announcement_url }}" class="heading-5 text-white">{{ block.settings.announcement_text }}</a>
+              </h3>
+            {% else %}
+              <h3 class="announcement__text heading-5 text-white">{{ block.settings.announcement_text }}</h3>
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="announcement__lang relative">
+          {% form 'localization', id: "form-lang", class: "announcement__form" %}
+            <button class="localeBtn text-white flex align-center  heading-5 text-white pointer just-end" disabled>{{ form.current_locale.endonym_name }}
+              <div class="icon-down">
+                {% render 'arrow-down' %}
+              </div>
+            </button>
+            <ul class="lang-list list-none absolute invisible">
+              {% for locale in shop.published_locales %}
+                <li class="lang-list__item pointer" data-lang="{{ locale.iso_code }}">
+                  {{ locale.endonym_name }}
+                </li>
+              {% endfor %}
+              <input
+                type="hidden"
+                name="locale_code"
+                value="{{ form.current_locale.iso_code }}"
+                id="localeCode">
+            </ul>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+
+<script>
+  document.querySelectorAll(".lang-list__item").forEach(item => {
+    item.addEventListener('click', (e) => {
+      console.log('vo')
+      document.getElementById('localeCode').value = item.getAttribute('data-lang')
+      document.getElementById('form-lang').submit()
+    })
+  })
+</script>
+
+{% schema %}
+  {
+    "name": "announcement bar",
+    "max_blocks": 12,
+    "blocks": [
+      {
+        "type": "announcement",
+        "name": "Announcement",
+        "settings": [
+          {
+            "type": "text",
+            "id": "announcement_text",
+            "default": "Welcome to our store",
+            "label": "Text"
+          }, {
+            "type": "select",
+            "id": "text_alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              }, {
+                "value": "center",
+                "label": "Center"
+              }, {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "left",
+            "label": "Text alignment"
+          }, {
+            "type": "color",
+            "id": "announcement_color",
+            "label": "Background color",
+            "default": "#000000"
+          }, {
+            "type": "url",
+            "id": "announcement_url",
+            "label": "Link"
+          }
+
+        ]
+      }
+    ],
+    "default": {
+      "blocks": [
+        {
+          "type": "announcement"
+        }
+      ]
+    }
+  }
+{% endschema %}

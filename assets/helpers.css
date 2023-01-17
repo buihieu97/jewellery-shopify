@@ -1,0 +1,167 @@
+/* spacing */
+.w-100 {
+  width: 100%;
+}
+.h-100 {
+  height: 100%;
+}
+.max-w-full {
+  max-width: 100%;
+}
+.max-h-full {
+  max-height: 100%;
+}
+/* spacing */
+
+/* layout */
+.hidden {
+  display: none;
+}
+.grid {
+  display: grid;
+}
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.f-grow-1 {
+  flex-grow: 1;
+}
+.flex-center2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.align-center {
+  align-items: center;
+}
+.just-center {
+  justify-content: center;
+}
+.just-between {
+  justify-content: space-between;
+}
+.just-end {
+  justify-content: end;
+}
+.invisible {
+  visibility: hidden;
+}
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.pointer {
+  cursor: pointer;
+}
+/* layout */
+
+/* background */
+
+/* background */
+
+/* color */
+.text-white {
+  color: var(--white) !important;
+}
+/* input style */
+.outline-none {
+  outline: none;
+}
+.border-none {
+  border: none;
+}
+.list-none {
+  list-style: none;
+}
+/* input style */
+
+/* font */
+.font-700 {
+  font-weight: 700;
+}
+/* font */
+
+/* border */
+.radius-5 {
+  border-radius: 5px;
+}
+.radius-full {
+  border-radius: 9999px;
+}
+/* border */
+.aspect-square {
+  aspect-ratio: 1/1;
+}
+.list-none {
+  list-style-type: none;
+}
+.overlay {
+  background: rgb(241, 241, 241);
+  background: linear-gradient(
+    180deg,
+    rgba(241, 241, 241, 1) 0%,
+    rgba(170, 170, 170, 1) 50%,
+    rgba(105, 105, 105, 1) 100%
+  );
+}
+.overlay-1 {
+  background: rgba(0, 0, 0, 0.5);
+}
+/* heading */
+.heading-1,
+.heading-2,
+.heading-3,
+.heading-4,
+.heading-5 {
+  letter-spacing: 2px;
+  color: var(--color-text);
+  font-weight: 600;
+}
+.heading-1 {
+  font-size: 30px;
+  line-height: calc(45 / 30);
+}
+.heading-2 {
+  font-size: 24px;
+  line-height: calc(36 / 24);
+}
+.heading-3 {
+  font-size: 20px;
+  line-height: calc(30 / 20);
+}
+.heading-4 {
+  font-size: 16px;
+  line-height: calc(24 / 16);
+}
+.heading-5 {
+  font-size: 14px;
+  line-height: calc(24 / 14);
+}
+
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+}
+
+/*  Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .heading-1-lg {
+    font-size: 30px;
+    line-height: calc(45 / 30);
+  }
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+}

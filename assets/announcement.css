@@ -1,0 +1,44 @@
+.announcement {
+  background: var(--bg-announcement);
+  color: var(--white);
+}
+.announcement__row {
+  height: 50px;
+}
+
+.announcement__content {
+  text-transform: uppercase;
+}
+.announcement__text {
+  text-align: var(--announcement-align);
+  margin-right: 24px;
+  font-weight: 400;
+}
+.announcement__lang {
+  margin-left: auto;
+}
+
+.localeBtn {
+  border: none;
+  background: transparent;
+  min-width: 80px;
+}
+.icon-down {
+  width: 14px;
+  margin-left: 5px;
+}
+.lang-list:hover,
+.localeBtn:hover ~ .lang-list {
+  visibility: visible;
+}
+.lang-list {
+  background-color: var(--bg-announcement);
+  width: 100%;
+  text-align: center;
+  top: 25px;
+  transition: all 0.3s;
+  z-index: 9999;
+}
+.lang-list__item {
+  padding: 5px;
+}

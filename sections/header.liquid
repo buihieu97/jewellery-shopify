@@ -1,0 +1,137 @@
+{{ "header.css" | asset_url | stylesheet_tag }}
+
+<header class="header relative" style="--header-bg : {{ section.settings.color_header }}; --size-logo: {{ section.settings.logo_size | append: 'px'  }}">
+  <div class="container-big">
+    <div class="row header__row flex just-between align-center">
+      <div class="header__logo">
+        {% if section.settings.header_logo == blank %}
+          <a href="{{ routes.root_url }}" class="header__logo--link">{{ shop.name | upcase }}</a>
+        {% else %}
+          <a href="{{ routes.root_url }}" class="header__logo--link">
+            <img
+              src="{{ section.settings.header_logo | img_url: 'master' }}"
+              alt="logo"
+              class="header__logo--img w-100">
+          </a>
+        {% endif %}
+      </div>
+      <nav class="header__nav absolute ">
+        <ul class="header__list list-none flex flex-col">
+          {% for link in section.settings.nav-menu.links %}
+            <li class="header__item">
+              <a class="header__link heading-5" href="{{ link.url }}">
+                {{ link.title | upcase }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      <div class="header__action flex ">
+        <button class="header__icon header__icon--search pointer">
+          {% render 'icon-search' %}
+        </button>
+        <button class="header__icon header__icon--favorite pointer">
+          {% render 'icon-favorite' %}
+        </button>
+        {% if shop.customer_accounts_enabled %}
+          {% if customer %}
+            <a href="{{ routes.account_url }}" class="header__icon header__icon--user">
+              {% render 'icon-user' %}
+            </a>
+          {% else %}
+            <a href="/account/login" class="header__icon header__icon--user">
+              {% render 'icon-user' %}</a>
+          {% endif %}
+        {% endif %}
+        <a href="{{ routes.cart_url }}" class="header__icon header__icon--bag">
+          {% render 'icon-bag' %}
+        </a>
+        <button class="header__icon header__icon--menu pointer">
+          {% render 'icon-menu' %}
+        </button>
+        <button class="header__icon header__icon--close hidden pointer">
+          {% render 'icon-close' %}
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const announcement = document.querySelectorAll(".announcement")
+  const header = document.querySelector('.header')
+  const navBar = document.querySelector('.header__nav')
+  const btnMenu = document.querySelector('.header__icon--menu')
+  const btnClose = document.querySelector('.header__icon--close')
+  let maxHeight = 0
+  announcement.forEach(e => {
+    maxHeight += e.clientHeight
+  })
+
+  maxHeight += header.clientHeight
+  navBar.style.height = `calc(100vh - ${
+    maxHeight + 'px'
+  })`
+  btnMenu.addEventListener('click', (e) => {
+    let heightHeader = header.clientHeight + "px"
+    navBar.style.top = heightHeader
+    navBar.style.left = 0
+    document.querySelector('body').style.overflowY = "hidden"
+    btnMenu
+      .classList
+      .add("hidden")
+      btnClose
+      .classList
+      .remove("hidden")
+
+  })
+  btnClose.addEventListener('click', (e) => {
+    navBar.style.left = '-100%'
+    btnMenu
+      .classList
+      .remove("hidden")
+      btnClose
+      .classList
+      .add("hidden")
+    document
+    .querySelector('body')
+    .style
+    .overflowY = "unset"
+})
+</script>
+
+{% schema %}
+  {
+    "name": "header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "header_logo",
+        "label": "Logo image"
+      },
+      {
+        "type": "range",
+        "id": "logo_size",
+        "min": 70,
+        "max": 130,
+        "default": 80,
+        "step": 5,
+        "label": "Size logo image"
+      },
+      {
+        "type": "link_list",
+        "id": "nav-menu",
+        "default": "main-menu",
+        "label": "Menu nav link"
+      },
+      {
+        "type": "header",
+        "content": "Background Colors"
+      }, {
+        "type": "color",
+        "id": "color_header",
+        "label": "Background color",
+        "default": "#FFFFFF"
+      }
+    ]
+  }
+{% endschema %}

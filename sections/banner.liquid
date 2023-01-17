@@ -1,0 +1,99 @@
+{{ "banner.css" | asset_url | stylesheet_tag }}
+
+<div class="banner">
+  <div class="container-fluid swiper mySwiper">
+    <ul class="banner__list swiper-wrapper list-none">
+      {% for block in section.blocks %}
+        <li class="banner__item swiper-slide relative">
+          <div class="banner__media h-100">
+            {% if block.settings.banner_img != blank %}
+              <img
+                class="banner__media--img h-100 w-100"
+                alt="banner"
+                src="{{ block.settings.banner_img | img_url: 'master' }}">
+            {% else %}
+              <div class="banner__svg overlay h-100">
+                {{ "collection-2" | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="banner__content absolute">
+            <h3 class="banner__title heading-4">
+              {{ block.settings.banner_title | upcase }}
+            </h3>
+            {% if block.settings.banner_link != blank %}
+              <a class="banner__btn btn--white btn" href="{{ block.settings.banner_link }}">{{ block.settings.banner_btn | upcase }}</a>
+            {% else %}
+              <div class="banner__btn btn--white btn">{{ block.settings.banner_btn | upcase }}</div>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+    <button class="button-next absolute pointer">
+      {% render 'arrow-right' %}
+    </button>
+    <button class="button-prev absolute pointer">
+      {% render 'arrow-left' %}
+    </button>
+  </div>
+</div>
+
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    navigation: {
+      nextEl: ".button-next",
+      prevEl: ".button-prev"
+    }
+  });
+</script>
+{% schema %}
+  {
+    "name": "banner",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "banner block",
+        "type": "banner_block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "banner_img",
+            "label": "Pick image"
+          }, {
+            "type": "text",
+            "id": "banner_title",
+            "label": "Title banner",
+            "default": "this is title banner"
+          }, {
+            "type": "text",
+            "id": "banner_btn",
+            "label": "Name button",
+            "default": "name button"
+          }, {
+            "type": "url",
+            "id": "banner_link",
+            "label": "Link button"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 7,
+    "presets": [
+      {
+        "name": "banner block",
+        "blocks": [
+          {
+            "type": "banner_block"
+          }, {
+            "type": "banner_block"
+          }, {
+            "type": "banner_block"
+          }, {
+            "type": "banner_block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
